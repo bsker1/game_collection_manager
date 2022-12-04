@@ -10,3 +10,4 @@ run:
 
 clean:
 	rm *.o game_collection_manager
+	clear
