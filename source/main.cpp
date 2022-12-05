@@ -274,11 +274,11 @@ void insertGame(Game &inGame, string &dataBuffer)
     gamesListWrite.open("data/gameslist.txt");
 
     gamesListWrite << inGame.id
-                   << "$name:" << inGame.name
-                   << "$platform:" << inGame.platform
-                   << "$format:" << inGame.format
-                   << "$completion:" << inGame.completion
-                   << "$priority:" << inGame.priority << "\n"
+                   << "$" << inGame.name
+                   << "$" << inGame.platform
+                   << "$" << inGame.format
+                   << "$" << inGame.completion
+                   << "$" << inGame.priority << "\n"
                    << dataBuffer;
     gamesListWrite.close();
 
