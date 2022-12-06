@@ -21,6 +21,8 @@ void dallocList(GameNode*);
 void viewCollection();
 void addGames();
 
+void displayTableMargin();
+void displayGamesList(GameNode*);
 void stringUpper(string&);
 int generateID(string);
 void displayGame(Game&);
@@ -111,10 +113,130 @@ void viewCollection()
         }
     }
 
-    //  Display stuff
+    displayTableMargin();
+    displayGamesList(gameHead);
 
     dallocList(gameHead);
     gameHead = nullptr;
+}
+
+void displayTableMargin()
+{
+    string fillerBuffer;
+    for (int i = 0; i < 46; ++i)
+        fillerBuffer += " ";
+    cout << "\nName" << fillerBuffer << "| Platform | Format | Completion | Priority"
+         << endl;
+    fillerBuffer.clear();
+    for (int i = 0; i < 50; ++i)
+        fillerBuffer += "-";
+    cout << fillerBuffer << "|";
+    fillerBuffer.clear();
+    for (int i = 0; i < 10; ++i)
+        fillerBuffer += "-";
+    cout << fillerBuffer << "|";
+    fillerBuffer.clear();
+    for (int i = 0; i < 8; ++i)
+        fillerBuffer += "-";
+    cout << fillerBuffer << "|";
+    fillerBuffer.clear();
+    for (int i = 0; i < 12; ++i)
+        fillerBuffer += "-";
+    cout << fillerBuffer << "|";
+    fillerBuffer.clear();
+    for (int i = 0; i < 9; ++i)
+        fillerBuffer += "-";
+    cout << fillerBuffer << endl;
+    fillerBuffer.clear();
+}
+
+void displayGamesList(GameNode* head)
+{
+    if (head == nullptr)
+    {
+        cout << endl;
+        return;
+    }
+
+    GameNode* iter = head;
+    int gameNum = 1;
+    while (iter != nullptr)
+    {
+        //  Prints game names
+        bool secondLine = false;
+        int index = 49;
+        string fillerBuffer;
+        string currentName = to_string(gameNum) + ". " + iter->game.name;
+        if (currentName.size() <= 49)
+        {
+            cout << currentName;
+            for (int i = 0; i < 50 - currentName.size(); ++i)
+                fillerBuffer += " ";
+            cout << fillerBuffer << "| ";
+            fillerBuffer.clear();
+        }
+        else
+        {
+            secondLine = true;
+            while (currentName[index] != ' ')
+                --index;
+            cout << currentName.substr(0, index);
+            for (int i = 0; i < 50 - index; ++i)
+                fillerBuffer += " ";
+            cout << fillerBuffer << "| ";
+            fillerBuffer.clear();
+            ++index;
+        }
+
+        string currentPlatform = iter->game.platform;
+        cout << currentPlatform;
+        for (int i = 0; i < 9 - currentPlatform.size(); ++i)
+            fillerBuffer += " ";
+        cout << fillerBuffer << "| ";
+        fillerBuffer.clear();
+
+        string currentFormat = iter->game.format;
+        cout << currentFormat;
+        for (int i = 0; i < 7 - currentFormat.size(); ++i)
+            fillerBuffer += " ";
+        cout << fillerBuffer << "| ";
+        fillerBuffer.clear();
+
+        string currentCompletion = iter->game.completion;
+        cout << currentCompletion;
+        for (int i = 0; i < 11 - currentCompletion.size(); ++i)
+            fillerBuffer += " ";
+        cout << fillerBuffer << "| ";
+        fillerBuffer.clear();
+
+        string currentPriority = iter->game.priority;
+        cout << currentPriority << endl;
+
+        if (secondLine)
+        {
+            string remainingName = currentName.substr(index,
+                                                      currentName.size() - index);
+            cout << remainingName;
+            for (int i = 0; i < 50 - remainingName.size(); ++i)
+                fillerBuffer += " ";
+            cout << fillerBuffer << "|";
+            fillerBuffer.clear();
+            for (int i = 0; i < 10; ++i)
+                fillerBuffer += " ";
+            cout << fillerBuffer << "|";
+            fillerBuffer.clear();
+            for (int i = 0; i < 8; ++i)
+                fillerBuffer += " ";
+            cout << fillerBuffer << "|";
+            fillerBuffer.clear();
+            for (int i = 0; i < 12; ++i)
+                fillerBuffer += " ";
+            cout << fillerBuffer << "|\n";
+        }
+
+        iter = iter->nextGame;
+        ++gameNum;
+    }
 }
 
 void dallocList(GameNode* head)
