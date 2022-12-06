@@ -9,6 +9,14 @@ struct Game
     int id;
     string name, platform, format, completion, priority;
 };
+void fillGame(Game &, string);
+
+struct GameNode
+{
+    Game game;
+    GameNode* nextGame;
+};
+void dallocList(GameNode*);
 
 void viewCollection();
 void addGames();
@@ -24,7 +32,7 @@ int main()
     while (true)
     {
         int choice = 0;
-        cout << "Main Menu\n" << endl;
+        cout << "\nMain Menu\n" << endl;
 
         cout << "\t1) View Collection\n"
              << "\t2) Add Games\n"
@@ -56,7 +64,136 @@ int main()
 
 void viewCollection()
 {
-    cout << "viewCollection() called" << endl;
+    ifstream gamesListRead;
+    string currentLine;
+    string gameDataBuffer;
+    int gameCount = 0;
+    //  Fills gameDataBuffer with last gameslist.txt save
+    gamesListRead.open("data/gameslist.txt");
+    while (getline(gamesListRead, currentLine, '\n'))
+    {
+        gameDataBuffer += currentLine + "\n";
+        ++gameCount;
+    }
+    gamesListRead.close();
+    currentLine.clear();
+
+    int index = 0;
+    int indexBuffer = index;
+    int currentDataLength = 0;
+    GameNode* gameHead = nullptr;
+    //  Fills LL with game objects with saved data
+    for (int i = 0; i < gameCount; ++i)
+    {
+        //  Fills currentLine with game data
+        while (gameDataBuffer[index] != '\n')
+        {
+            ++index;
+            ++currentDataLength;
+        }
+        currentLine = gameDataBuffer.substr(indexBuffer, currentDataLength);
+        ++index;
+        indexBuffer = index;
+        currentDataLength = 0;
+
+        //  Appends LL with data
+        GameNode* newNode = new GameNode;
+        newNode->nextGame = nullptr;
+        fillGame(newNode->game, currentLine);
+        if (gameHead == nullptr)
+            gameHead = newNode;
+        else
+        {
+            GameNode* temp = gameHead;
+            while (temp->nextGame != nullptr)
+                temp = temp->nextGame;
+            temp->nextGame = newNode;
+        }
+    }
+
+    //  Display stuff
+
+    dallocList(gameHead);
+    gameHead = nullptr;
+}
+
+void dallocList(GameNode* head)
+{
+    if (head == nullptr)
+        return;
+    
+    GameNode* prev = head;
+    GameNode* next = prev;
+    while (next != nullptr)
+    {
+        prev = next;
+        next = prev->nextGame;
+        delete prev;
+    }
+}
+
+void fillGame(Game &inGame, string gameData)
+{
+    int index = 0;
+    int indexBuffer = index;
+    int currentDataLength = 0;
+
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.id = generateID(gameData.substr(indexBuffer, currentDataLength));
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.name = gameData.substr(indexBuffer, currentDataLength);
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.platform = gameData.substr(indexBuffer, currentDataLength);
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.format = gameData.substr(indexBuffer, currentDataLength);
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.completion = gameData.substr(indexBuffer, currentDataLength);
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.priority = gameData.substr(indexBuffer, currentDataLength);
 }
 
 void addGames()
@@ -83,7 +220,6 @@ void addGames()
     {
         Game newGame;
         string input;
-        //  Sets new game's ID to next unused ID
         newGame.id = ++lastID;
 
         cout << "\nEnter the game's info, or type \"back\" in any prompt to abort."
@@ -107,6 +243,7 @@ void addGames()
                 return;
             stringUpper(input);
 
+            //  Checks if inputted platform is supported
             string platformIterator;
             while (getline(platformsList, platformIterator, '\n'))
             {
@@ -199,13 +336,9 @@ void addGames()
                 continue;
             }
 
-            if (toupper(choice) == 'N')
-                break;
-            else
-            {
+            if (toupper(choice) == 'Y')
                 insertGame(newGame, gameDataBuffer);
-                break;
-            }
+            break;
         }
 
         while (true)
@@ -224,8 +357,8 @@ void addGames()
 
             if (toupper(choice) == 'N')
                 return;
-            else
-                break;
+            
+            break;
         }
     }
 }
