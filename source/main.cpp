@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -9,7 +10,8 @@ struct Game
     int id;
     string name, platform, format, completion, priority;
 };
-void fillGame(Game &, string);
+void fillGame(Game&, string);
+void fillGame(Game&, Game&);
 
 struct GameNode
 {
@@ -23,6 +25,9 @@ void addGames();
 
 void displayTableMargin();
 void displayGamesList(GameNode*);
+void selectGame(GameNode**);
+void deleteGame(GameNode**, int);
+void editGame(Game&);
 void stringUpper(string&);
 int generateID(string);
 void displayGame(Game&);
@@ -49,7 +54,7 @@ int main()
             continue;
         }
         
-        switch(choice)
+        switch (choice)
         {
             case 1:
                 viewCollection();
@@ -84,7 +89,8 @@ void viewCollection()
     int indexBuffer = index;
     int currentDataLength = 0;
     GameNode* gameHead = nullptr;
-    //  Fills LL with game objects with saved data
+    GameNode* iter = gameHead;
+    //  Fills source LL with game objects with saved data
     for (int i = 0; i < gameCount; ++i)
     {
         //  Fills currentLine with game data
@@ -103,21 +109,80 @@ void viewCollection()
         newNode->nextGame = nullptr;
         fillGame(newNode->game, currentLine);
         if (gameHead == nullptr)
+        {
             gameHead = newNode;
+            iter = newNode;
+        }
         else
         {
-            GameNode* temp = gameHead;
-            while (temp->nextGame != nullptr)
-                temp = temp->nextGame;
-            temp->nextGame = newNode;
+            iter->nextGame = newNode;
+            iter = iter->nextGame;
         }
     }
 
-    displayTableMargin();
-    displayGamesList(gameHead);
+    //  Makes a copy of source LL for filtering
+    GameNode* filterHead = nullptr;
+    if (gameHead != nullptr)
+    {
+        GameNode* sourceIter = gameHead;
+        iter = filterHead;
+        while (sourceIter != nullptr)
+        {
+            GameNode* newNode = new GameNode;
+            newNode->nextGame = nullptr;
+            fillGame(newNode->game, sourceIter->game);
+            if (filterHead == nullptr)
+            {
+                filterHead = newNode;
+                iter = newNode;
+            }
+            else
+            {
+                iter->nextGame = newNode;
+                iter = iter->nextGame;
+            }
+            sourceIter = sourceIter->nextGame;
+        }
+    }
+
+    bool loopFlag = true;
+    while (loopFlag)
+    {
+        displayTableMargin();
+        displayGamesList(filterHead);
+
+        int choice = 0;
+        cout << "\nSelect an option:\n" << endl;
+
+        cout << "\t1) Select Game\n"
+             << "\t2) Filter Games\n"
+             << "\t3) Back\n"
+             << "\n*__ ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 3)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        GameNode** filterHeadPtr = &filterHead;
+        switch (choice)
+        {
+            case 1:
+                selectGame(filterHeadPtr);
+                break;
+            case 2:
+                break;
+            case 3:
+                loopFlag = false;
+                break;
+        }
+    }
 
     dallocList(gameHead);
-    gameHead = nullptr;
+    dallocList(filterHead);
 }
 
 void displayTableMargin()
@@ -239,6 +304,280 @@ void displayGamesList(GameNode* head)
     }
 }
 
+void selectGame(GameNode** inHeadPtr)
+{
+    GameNode* inHead = *inHeadPtr;
+    if (inHead == nullptr)
+    {
+        cout << "No games to select!" << endl;
+        return;
+    }
+
+    GameNode* iter = nullptr;
+    while (true)
+    {
+        int choice = 0;
+        cout << "\nSelect a game by its number in the list above:\n" << endl;
+
+        cout << "\n*__ ";
+        cin >> choice;
+        if (choice < 1)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        iter = inHead;
+        for (int i = 1; i < choice; ++i)
+        {
+            if (iter == nullptr)
+                break;
+            iter = iter->nextGame;
+        }
+        if (iter == nullptr)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        break;
+    }
+
+    while (true)
+    {
+        int choice = 0;
+        cout << "\nWhat would you like to do with this game?:\n" << endl;
+
+        cout << "\t1) Edit Game\n"
+             << "\t2) Delete Game\n"
+             << "\t3) Back\n"
+             << "\n*__ ";
+        cin >> choice;
+        if (choice < 1 || choice > 3)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        switch (choice)
+        {
+            case 1:
+                editGame(iter->game);
+                return;
+            case 2:
+                deleteGame(inHeadPtr, iter->game.id);
+                return;
+            case 3:
+                return;
+        }
+    }
+}
+
+void editGame(Game& inGame)
+{
+    bool mainLoopFlag = true;
+    while (mainLoopFlag)
+    {
+        Game newGame;
+        string input;
+        newGame.id = inGame.id;
+
+        cout << "\nEnter the game's info, or type \"back\" in any prompt to abort."
+             << endl;
+        cin.get();
+
+        cout << "\nName:\n*__ ";
+        getline(cin, input);
+        if (input == "back")
+            return;
+        newGame.name = input;
+
+        ifstream platformsList;
+        bool loopFlag = true;
+        while (loopFlag)
+        {
+            platformsList.open("data/platformslist.txt");
+            cout << "\n\nPlatform:\n*__ ";
+            getline(cin, input);
+            if (input == "back")
+                return;
+            stringUpper(input);
+
+            //  Checks if inputted platform is supported
+            string platformIterator;
+            while (getline(platformsList, platformIterator, '\n'))
+            {
+                if (input == platformIterator)
+                {
+                    newGame.platform = platformIterator;
+                    loopFlag = false;
+                    break;
+                }
+            }
+
+            if (loopFlag)
+            {
+                cerr << "ERROR: invalid platform";
+                clearBuffer();
+            }
+            platformsList.close();
+        }
+        
+        while (true)
+        {
+            cout << "\n\nFormat (PHYS, DIG, EMU, GP):\n*__ ";
+            cin >> input;
+            if (input == "back")
+                return;
+            stringUpper(input);
+
+            if (input != "PHYS" && input != "DIG" && input != "EMU" && input != "GP")
+            {
+                cerr << "ERROR: invalid format";
+                clearBuffer();
+                continue;
+            }
+
+            newGame.format = input;
+            break;
+        }
+
+        while (true)
+        {
+            cout << "\n\nCompletion (NEW, STARTED, BEAT):\n*__ ";
+            cin >> input;
+            if (input == "back")
+                return;
+            stringUpper(input);
+
+            if (input != "NEW" && input != "STARTED" && input != "BEAT")
+            {
+                cerr << "ERROR: invalid format";
+                clearBuffer();
+                continue;
+            }
+
+            newGame.completion = input;
+            break;
+        }
+
+        while (true)
+        {
+            cout << "\n\nPriority (NONE, PLAY, BACKLOG):\n*__ ";
+            cin >> input;
+            if (input == "back")
+                return;
+            stringUpper(input);
+
+            if (input != "NONE" && input != "PLAY" && input != "BACKLOG")
+            {
+                cerr << "ERROR: invalid format";
+                clearBuffer();
+                continue;
+            }
+
+            newGame.priority = input;
+            break;
+        }
+
+        while (true)
+        {
+            char choice;
+            cout << endl;
+            displayGame(newGame);
+            cout << "\nIs this correct? (Y/N)\n"
+                 << "*__ ";
+            cin >> choice;
+
+            if (toupper(choice) != 'Y' && toupper(choice) != 'N')
+            {
+                cerr << "ERROR: invalid choice" << endl;
+                clearBuffer();
+                continue;
+            }
+
+            if (toupper(choice) == 'Y')
+            {
+                mainLoopFlag = false;
+                fillGame(inGame, newGame);
+
+                ifstream gamesListRead;
+                gamesListRead.open("data/gameslist.txt");
+                string idString = to_string(newGame.id);
+                string prevBuffer;
+                string nextBuffer;
+                string listIter;
+
+                getline(gamesListRead, listIter, '\n');
+                while (listIter.substr(0, idString.size()) != idString)
+                {
+                    prevBuffer += listIter + "\n";
+                    getline(gamesListRead, listIter, '\n');
+                }
+
+                while (getline(gamesListRead, listIter, '\n'))
+                    nextBuffer += listIter + "\n";
+                gamesListRead.close();
+
+                ofstream gameslistWrite;
+                gameslistWrite.open("data/gameslist.txt");
+                gameslistWrite << prevBuffer
+                               << idString << "$"
+                               << newGame.name << "$"
+                               << newGame.platform << "$"
+                               << newGame.format << "$"
+                               << newGame.completion << "$"
+                               << newGame.priority << "\n"
+                               << nextBuffer;
+                gameslistWrite.close();
+            }
+            break;
+        }
+
+    }
+}
+
+void deleteGame(GameNode** inHeadPtr, int deleteID)
+{
+    GameNode* inHead = *inHeadPtr;
+    ifstream gamesListRead;
+    ofstream gamesListWrite;
+    string prevBuffer;
+    string nextBuffer;
+    string listIter;
+
+    gamesListRead.open("data/gameslist.txt");
+    getline(gamesListRead, listIter, '\n');
+    while (generateID(listIter.substr(0, to_string(deleteID).size())) != deleteID)
+    {
+        prevBuffer += listIter + "\n";
+        getline(gamesListRead, listIter, '\n');
+    }
+    while (getline(gamesListRead, listIter, '\n'))
+        nextBuffer += listIter + "\n";
+    gamesListRead.close();
+
+    gamesListWrite.open("data/gameslist.txt");
+    gamesListWrite << prevBuffer << nextBuffer;
+    gamesListWrite.close();
+
+    GameNode* deleteNode = inHead;
+    GameNode* prev = inHead;
+    while (deleteNode->game.id != deleteID)
+    {
+        prev = deleteNode;
+        deleteNode = deleteNode->nextGame;
+    }
+    if (deleteNode == inHead)
+        inHead = inHead->nextGame;
+    prev->nextGame = deleteNode->nextGame;
+    deleteNode->nextGame = nullptr;
+    delete deleteNode;
+}
+
 void dallocList(GameNode* head)
 {
     if (head == nullptr)
@@ -254,7 +593,7 @@ void dallocList(GameNode* head)
     }
 }
 
-void fillGame(Game &inGame, string gameData)
+void fillGame(Game& inGame, string gameData)
 {
     int index = 0;
     int indexBuffer = index;
@@ -316,6 +655,16 @@ void fillGame(Game &inGame, string gameData)
         ++currentDataLength;
     }
     inGame.priority = gameData.substr(indexBuffer, currentDataLength);
+}
+
+void fillGame(Game& copy, Game& source)
+{
+    copy.id = source.id;
+    copy.name = source.name;
+    copy.platform = source.platform;
+    copy.format = source.format;
+    copy.completion = source.completion;
+    copy.priority = source.priority;
 }
 
 void addGames()
@@ -485,7 +834,7 @@ void addGames()
     }
 }
 
-void stringUpper(string &inString)
+void stringUpper(string& inString)
 {
     for (int i = 0; i < inString.size(); ++i)
         inString[i] = toupper(inString[i]);
@@ -514,7 +863,7 @@ int generateID(string inString)
     return id;
 }
 
-void displayGame(Game &inGame)
+void displayGame(Game& inGame)
 {
     cout << "Title: " << inGame.name << endl;
     cout << "Platform: " << inGame.platform << endl;
@@ -523,7 +872,7 @@ void displayGame(Game &inGame)
     cout << "Priority: " << inGame.priority << endl;
 }
 
-void insertGame(Game &inGame, string &dataBuffer)
+void insertGame(Game& inGame, string& dataBuffer)
 {
     ofstream gamesListWrite;
     gamesListWrite.open("data/gameslist.txt");
@@ -553,4 +902,3 @@ void clearBuffer()
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
-
