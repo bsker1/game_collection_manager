@@ -1,8 +1,13 @@
 #include <iostream>
+#include <fstream>
+
+#include "utils.h"
+#include "Game.h"
+#include "save.h"
 
 using namespace std;
 
-void clearBuffer();
+void addGames();
 
 int main()
 {
@@ -30,7 +35,7 @@ int main()
                 cout << "View Collection chosen." << endl;
                 break;
             case 2:
-                cout << "Add Games chosen." << endl;
+                addGames();
                 break;
             case 3:
                 cout << "Exiting..." << endl;
@@ -39,8 +44,35 @@ int main()
     }
 }
 
-void clearBuffer()
+void addGames()
 {
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    while (true)
+    {
+        Game newGame = enterGameAttributes(getLastID() + 1);
+        if (newGame.id == -1)
+        {
+            cout << "Add Game aborted." << endl;
+            return;
+        }
+        
+        while (true)
+        {
+            char choice;
+            cout << "\nGame added successfully. Add another game? (Y/N)\n"
+                 << "*__ ";
+            cin >> choice;
+
+            if (toupper(choice) != 'Y' && toupper(choice) != 'N')
+            {
+                cerr << "ERROR: invalid choice" << endl;
+                clearBuffer();
+                continue;
+            }
+
+            if (toupper(choice) == 'N')
+                return;
+            
+            break;
+        }
+    }
 }
