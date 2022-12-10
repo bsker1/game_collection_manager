@@ -51,9 +51,11 @@ void addGames()
         Game newGame = enterGameAttributes(getLastID() + 1);
         if (newGame.id == -1)
         {
-            cout << "Add Game aborted." << endl;
+            cout << "\nAdd Game aborted." << endl;
             return;
         }
+
+        addGameToSave(newGame);
         
         while (true)
         {
