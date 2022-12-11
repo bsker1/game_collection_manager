@@ -22,3 +22,5 @@ struct GameNode
 void dallocList(GameNode*&);
 Game enterGameAttributes(int);
 void showEnteredGame(Game);
+GameNode* initializeList();
+void fillGame(Game&, string);

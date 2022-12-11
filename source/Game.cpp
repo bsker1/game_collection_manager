@@ -3,15 +3,11 @@
 //  Deletes each node in a GameNode list, sets head to nullptr
 void dallocList(GameNode*& head)
 {
-    if (head == nullptr)
-        return;
-    
-    GameNode* prev = head;
-    GameNode* next = prev;
-    while (next != nullptr)
+    GameNode* iter = head;
+    while (iter != nullptr)
     {
-        prev = next;
-        next = prev->nextGame;
+        GameNode* prev = iter;
+        iter = iter->nextGame;
         delete prev;
     }
     head = nullptr;
@@ -156,4 +152,92 @@ void showEnteredGame(Game inGame)
     cout << "Format: " << inGame.format << endl;
     cout << "Completion: " << inGame.completion << endl;
     cout << "Priority: " << inGame.priority << endl;
+}
+
+//  Returns head of a linked list holding Game objects
+//  with save file data
+GameNode* initializeList()
+{
+    GameNode* head = nullptr;
+    ifstream gamesListRead;
+    string currentLine;
+    gamesListRead.open("data/gameslist.txt");
+    GameNode* iter = nullptr;
+    while (getline(gamesListRead, currentLine, '\n'))
+    {
+        GameNode* newNode = new GameNode;
+        fillGame(newNode->game, currentLine);
+        newNode->nextGame = nullptr;
+        if (head == nullptr)
+        {
+            head = newNode;
+            iter = newNode;
+        }
+        else
+        {
+            iter->nextGame = newNode;
+            iter = iter->nextGame;
+        }
+    }
+
+    cout << "working" << endl;
+    gamesListRead.close();
+    return head;
+}
+
+//  Fills a Game object based on contents for a line in the save file
+void fillGame(Game& inGame, string gameData)
+{
+    string currentData;
+    int index = 0;
+    int indexBuffer = index;
+    int currentDataLength = 0;
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.id = strToInt(gameData.substr(indexBuffer, currentDataLength));
+
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.name = gameData.substr(indexBuffer, currentDataLength);
+
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.platform = gameData.substr(indexBuffer, currentDataLength);
+
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.format = gameData.substr(indexBuffer, currentDataLength);
+
+    ++index;
+    indexBuffer = index;
+    currentDataLength = 0;
+    while (gameData[index] != '$')
+    {
+        ++index;
+        ++currentDataLength;
+    }
+    inGame.completion = gameData.substr(indexBuffer, currentDataLength);
+
+    inGame.priority = gameData.substr(index + 1);
 }

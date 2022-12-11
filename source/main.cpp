@@ -7,6 +7,7 @@
 
 using namespace std;
 
+void viewCollection();
 void addGames();
 
 int main()
@@ -32,7 +33,7 @@ int main()
         switch (choice)
         {
             case 1:
-                cout << "View Collection chosen." << endl;
+                viewCollection();
                 break;
             case 2:
                 addGames();
@@ -42,6 +43,13 @@ int main()
                 return 0;
         }
     }
+}
+
+void viewCollection()
+{
+    GameNode* head = initializeList();
+
+    dallocList(head);
 }
 
 void addGames()
