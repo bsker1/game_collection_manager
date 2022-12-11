@@ -241,3 +241,52 @@ void fillGame(Game& inGame, string gameData)
 
     inGame.priority = gameData.substr(index + 1);
 }
+
+//  Prints the contents of a Game linked list in table form
+void showGamesList(GameNode* inHead)
+{
+    int gameCount = 0;
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        bool extraLine = false;
+        string printedName = to_string(++gameCount) + ". " + iter->game.name;
+        cout << "| ";
+        int index = 50;
+        if (printedName.size() > index)
+        {
+            extraLine = true;
+            while (printedName[index] != ' ')
+                --index;
+            string nameFirst = printedName.substr(0, index);
+            cout << nameFirst << characterBuffer(' ', 50 - index);
+            ++index;
+        }
+        else
+            cout << printedName << characterBuffer(' ', 50 - printedName.size());
+        
+        cout << " | " << iter->game.platform
+             << characterBuffer(' ', 8 - iter->game.platform.size())
+             << " | " << iter->game.format
+             << characterBuffer(' ', 6 - iter->game.format.size())
+             << " | " << iter->game.completion
+             << characterBuffer(' ', 10 - iter->game.completion.size())
+             << " | " << iter->game.priority
+             << characterBuffer(' ', 8 - iter->game.priority.size())
+             << " |\n";
+        
+        if (extraLine)
+        {
+            int countBuffer = to_string(gameCount).size() + 1;
+            string nameExcess = printedName.substr(index);
+            cout << "| " << characterBuffer(' ', countBuffer) << nameExcess
+                 << characterBuffer(' ', 51 - nameExcess.size() - countBuffer)
+                 << "|" << characterBuffer(' ', 10) << "|"
+                 << characterBuffer(' ', 8) << "|"
+                 << characterBuffer(' ', 12) << "|"
+                 << characterBuffer(' ', 10) << "|\n";
+        }
+
+        iter = iter->nextGame;
+    }
+}

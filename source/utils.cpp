@@ -31,21 +31,25 @@ void stringUpper(string& inString)
         inString[i] = toupper(inString[i]);
 }
 
+//  Clears cin input buffer, for use whenever user inputs
+//  fail a determined test
 void clearBuffer()
 {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+//  Prints the margin for the games table
 void displayTableMargin()
 {
     cout << "\n| Name" << characterBuffer(' ', 47) << "| Platform | Format | Completion | Priority |"
          << "\n|" << characterBuffer('-', 52) << "|" << characterBuffer('-', 10) << "|"
          << characterBuffer('-', 8) << "|" << characterBuffer('-', 12) << "|"
          << characterBuffer('-', 10) << "|\n";
-    
 }
 
+//  Returns a string filled with a chosen amount of a chosen
+//  character
 string characterBuffer(char character, int count)
 {
     string result;

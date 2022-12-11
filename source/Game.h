@@ -24,3 +24,4 @@ Game enterGameAttributes(int);
 void showEnteredGame(Game);
 GameNode* initializeList();
 void fillGame(Game&, string);
+void showGamesList(GameNode*);
