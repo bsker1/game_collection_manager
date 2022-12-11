@@ -109,15 +109,13 @@ void selectGame(GameNode*& inHead)
         }
 
         int index = 0;
+        iter = inHead;
         while (index < choice && iter != nullptr)
-        {       //  x0x0x0xx000x0x0x
+        {
             if (iter->display)
-            {
                 ++index;
-                if (index >= choice)
-                    break;
-            }
-            iter = iter->nextGame;
+            if (index != choice)
+                iter = iter->nextGame;
         }
         if (iter == nullptr)
         {
