@@ -48,6 +48,7 @@ int main()
 void viewCollection()
 {
     GameNode* head = initializeList();
+    displayTableMargin();
 
     dallocList(head);
 }
