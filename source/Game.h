@@ -9,7 +9,7 @@ using namespace std;
 
 struct Game
 {
-    int id;
+    int id = -1;
     string name, platform, format, completion, priority;
 };
 
@@ -17,6 +17,7 @@ struct GameNode
 {
     Game game;
     GameNode* nextGame;
+    bool display = true;
 };
 
 void dallocList(GameNode*&);

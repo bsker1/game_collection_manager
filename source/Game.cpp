@@ -249,6 +249,11 @@ void showGamesList(GameNode* inHead)
     GameNode* iter = inHead;
     while (iter != nullptr)
     {
+        if (!iter->display)
+        {
+            iter = iter->nextGame;
+            continue;
+        }
         bool extraLine = false;
         string printedName = to_string(++gameCount) + ". " + iter->game.name;
         cout << "| ";

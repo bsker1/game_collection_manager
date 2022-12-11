@@ -10,6 +10,8 @@ using namespace std;
 void viewCollection();
 void addGames();
 
+void selectGame(GameNode*&);
+
 int main()
 {
     while (true)
@@ -48,10 +50,87 @@ int main()
 void viewCollection()
 {
     GameNode* head = initializeList();
-    displayTableMargin();
-    showGamesList(head);
+    while (true)
+    {
+        displayTableMargin();
+        showGamesList(head);
 
+        int choice = 0;
+        cout << "\nSelect an option:\n" << endl;
+
+        cout << "\t1) Select Game\n"
+             << "\t2) Filter Games\n"
+             << "\t3) Back\n"
+             << "\n*__ ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 3)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+        
+        switch (choice)
+        {
+            case 1:
+                selectGame(head);
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
+    }
     dallocList(head);
+}
+
+void selectGame(GameNode*& inHead)
+{
+    if (inHead == nullptr)
+    {
+        cout << "No games to select!" << endl;
+        return;
+    }
+
+    GameNode* iter = inHead;
+    while (true)
+    {
+        int choice = 1;
+        cout << "\nSelect a game by its number in the list above:\n" << endl;
+
+        cout << "*__ ";
+        cin >> choice;
+        if (choice < 1)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        int index = 0;
+        while (index < choice && iter != nullptr)
+        {       //  x0x0x0xx000x0x0x
+            if (iter->display)
+            {
+                ++index;
+                if (index >= choice)
+                    break;
+            }
+            iter = iter->nextGame;
+        }
+        if (iter == nullptr)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        cout << iter->game.name << " was chosen." << endl;
+        cin.get();
+
+        break;
+    }
 }
 
 void addGames()
