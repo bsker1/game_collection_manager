@@ -11,3 +11,4 @@ using namespace std;
 int getLastID();
 string loadFile(string);
 void addGameToSave(Game);
+void editGameInSave(Game);

@@ -47,3 +47,33 @@ void addGameToSave(Game inGame)
     
     gamesListWrite.close();
 }
+
+void editGameInSave(Game inGame)
+{
+    string prevLines;
+    string currentLine;
+    string nextLines;
+    string inGameIDString = to_string(inGame.id);
+    ifstream gamesListRead;
+    ofstream gamesListWrite;
+
+    gamesListRead.open("data/gameslist.txt");
+    getline(gamesListRead, currentLine, '\n');
+    while (currentLine.substr(0, inGameIDString.size()) != inGameIDString)
+    {
+        prevLines += currentLine + '\n';
+        getline(gamesListRead, currentLine, '\n');
+    }
+    while (getline(gamesListRead, currentLine, '\n'))
+        nextLines += currentLine + '\n';
+    gamesListRead.close();
+
+    gamesListWrite.open("data/gameslist.txt");
+    gamesListWrite << prevLines << inGameIDString << "$"
+                   << inGame.name << "$" << inGame.platform
+                   << "$" << inGame.format << "$"
+                   << inGame.completion << "$"
+                   << inGame.priority << "\n"
+                   << nextLines;
+    gamesListWrite.close();
+}

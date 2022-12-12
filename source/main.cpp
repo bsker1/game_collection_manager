@@ -164,12 +164,14 @@ void editGame(Game& inGame)
     Game editedGame = enterGameAttributes(inGame.id);
     if (editedGame.id == -1)
     {
-        cout << "Edit Game aborted." << endl;
+        cout << "\nEdit Game aborted." << endl;
         return;
     }
 
     copyGame(inGame, editedGame);
-    cout << "Game edited successfully." << endl;
+    editGameInSave(inGame);
+
+    cout << "\nGame edited successfully." << endl;
 }
 
 void addGames()

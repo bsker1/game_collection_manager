@@ -296,6 +296,7 @@ void showGamesList(GameNode* inHead)
     }
 }
 
+//  Copies one Game object's members to another Game object
 void copyGame(Game& copy, Game source)
 {
     copy.id = source.id;
