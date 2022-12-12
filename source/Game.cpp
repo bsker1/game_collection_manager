@@ -295,3 +295,13 @@ void showGamesList(GameNode* inHead)
         iter = iter->nextGame;
     }
 }
+
+void copyGame(Game& copy, Game source)
+{
+    copy.id = source.id;
+    copy.name = source.name;
+    copy.platform = source.platform;
+    copy.format = source.format;
+    copy.completion = source.completion;
+    copy.priority = source.priority;
+}

@@ -11,6 +11,7 @@ void viewCollection();
 void addGames();
 
 void selectGame(GameNode*&);
+void editGame(Game&);
 
 int main()
 {
@@ -93,10 +94,10 @@ void selectGame(GameNode*& inHead)
         return;
     }
 
-    GameNode* iter = inHead;
+    GameNode* selectedGame = inHead;
     while (true)
     {
-        int choice = 1;
+        int choice = 0;
         cout << "\nSelect a game by its number in the list above:\n" << endl;
 
         cout << "*__ ";
@@ -109,26 +110,66 @@ void selectGame(GameNode*& inHead)
         }
 
         int index = 0;
-        iter = inHead;
-        while (index < choice && iter != nullptr)
+        selectedGame = inHead;
+        while (index < choice && selectedGame != nullptr)
         {
-            if (iter->display)
+            if (selectedGame->display)
                 ++index;
             if (index != choice)
-                iter = iter->nextGame;
+                selectedGame = selectedGame->nextGame;
         }
-        if (iter == nullptr)
+        if (selectedGame == nullptr)
         {
             cerr << "ERROR: invalid choice" << endl;
             clearBuffer();
             continue;
         }
 
-        cout << iter->game.name << " was chosen." << endl;
-        cin.get();
+        while (true)
+        {
+            int choice = 0;
+            cout << "\nWhat would you like to do with "
+                 << selectedGame->game.name << "?:\n" << endl;
+
+            cout << "\t1) Edit Game\n"
+                 << "\t2) Delete Game\n"
+                 << "\t3) Back\n"
+                 << "\n*__ ";
+            cin >> choice;
+            if (choice < 1 || choice > 3)
+            {
+                cerr << "ERROR: invalid choice" << endl;
+                clearBuffer();
+                continue;
+            }
+
+            switch (choice)
+            {
+                case 1:
+                    editGame(selectedGame->game);
+                    return;
+                case 2:
+                    return;
+                case 3:
+                    return;
+            }
+        }
 
         break;
     }
+}
+
+void editGame(Game& inGame)
+{
+    Game editedGame = enterGameAttributes(inGame.id);
+    if (editedGame.id == -1)
+    {
+        cout << "Edit Game aborted." << endl;
+        return;
+    }
+
+    copyGame(inGame, editedGame);
+    cout << "Game edited successfully." << endl;
 }
 
 void addGames()
