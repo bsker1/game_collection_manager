@@ -32,6 +32,7 @@ string loadFile(string fileName)
     return fileString;
 }
 
+//  Adds Game object data to top of save file
 void addGameToSave(Game inGame)
 {
     string saveBuffer = loadFile("data/gameslist.txt");
@@ -48,6 +49,7 @@ void addGameToSave(Game inGame)
     gamesListWrite.close();
 }
 
+//  Edits game in save file with new Game object's contents
 void editGameInSave(Game inGame)
 {
     string prevLines;

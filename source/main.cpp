@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 #include "utils.h"
 #include "Game.h"
@@ -12,6 +13,7 @@ void addGames();
 
 void selectGame(GameNode*&);
 void editGame(Game&);
+void deleteGame(GameNode*&, GameNode*&);
 
 int main()
 {
@@ -149,6 +151,7 @@ void selectGame(GameNode*& inHead)
                     editGame(selectedGame->game);
                     return;
                 case 2:
+                    deleteGame(inHead, selectedGame);
                     return;
                 case 3:
                     return;
@@ -172,6 +175,54 @@ void editGame(Game& inGame)
     editGameInSave(inGame);
 
     cout << "\nGame edited successfully." << endl;
+}
+
+void deleteGame(GameNode*& inHead, GameNode*& selectedGame)
+{
+    while (true)
+    {
+        char choice;
+        cout << "\nAre you sure you would like to delete\n"
+             << selectedGame->game.name << "? (Y/N)\n"
+             << "*__ ";
+        cin >> choice;
+
+        if (toupper(choice) != 'Y' && toupper(choice) != 'N')
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        if (toupper(choice) == 'Y')
+            break;
+        
+        cout << "\nDelete Game aborted." << endl;
+        return;
+    }
+
+    if (selectedGame == inHead)
+    {
+        if (inHead->nextGame == nullptr)
+            inHead = nullptr;
+        else
+            inHead = inHead->nextGame;
+        delete selectedGame;
+        return;
+    }
+
+    GameNode* iter = inHead;
+    GameNode* prev = iter;
+    while (iter != selectedGame)
+    {
+        prev = iter;
+        iter = iter->nextGame;
+    }
+    prev->nextGame = iter->nextGame;
+    delete selectedGame;
+
+    cout << "\nDelete Game successful." << endl;
+    return;
 }
 
 void addGames()
