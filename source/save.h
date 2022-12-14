@@ -12,3 +12,4 @@ int getLastID();
 string loadFile(string);
 void addGameToSave(Game);
 void editGameInSave(Game);
+void deleteGameInSave(int);

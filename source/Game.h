@@ -27,3 +27,4 @@ GameNode* initializeList();
 void fillGame(Game&, string);
 void showGamesList(GameNode*);
 void copyGame(Game&, Game);
+void deleteNode(GameNode*&, GameNode*&);

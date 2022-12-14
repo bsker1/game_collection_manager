@@ -306,3 +306,34 @@ void copyGame(Game& copy, Game source)
     copy.completion = source.completion;
     copy.priority = source.priority;
 }
+
+void deleteNode(GameNode*& inHead, GameNode*& selectedGame)
+{
+    if (inHead == nullptr)
+    {
+        cout << "\nNo games to delete!" << endl;
+        return;
+    }
+
+    if (selectedGame == inHead)
+    {
+        if (inHead->nextGame == nullptr)
+            inHead = nullptr;
+        else
+            inHead = inHead->nextGame;
+        delete selectedGame;
+        selectedGame = nullptr;
+        return;
+    }
+
+    GameNode* iter = inHead;
+    GameNode* prev = iter;
+    while (iter != selectedGame)
+    {
+        prev = iter;
+        iter = iter->nextGame;
+    }
+    prev->nextGame = iter->nextGame;
+    delete selectedGame;
+    selectedGame = nullptr;
+}

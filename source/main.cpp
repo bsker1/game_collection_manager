@@ -201,25 +201,8 @@ void deleteGame(GameNode*& inHead, GameNode*& selectedGame)
         return;
     }
 
-    if (selectedGame == inHead)
-    {
-        if (inHead->nextGame == nullptr)
-            inHead = nullptr;
-        else
-            inHead = inHead->nextGame;
-        delete selectedGame;
-        return;
-    }
-
-    GameNode* iter = inHead;
-    GameNode* prev = iter;
-    while (iter != selectedGame)
-    {
-        prev = iter;
-        iter = iter->nextGame;
-    }
-    prev->nextGame = iter->nextGame;
-    delete selectedGame;
+    deleteGameInSave(selectedGame->game.id);
+    deleteNode(inHead, selectedGame);
 
     cout << "\nDelete Game successful." << endl;
     return;

@@ -55,7 +55,7 @@ void editGameInSave(Game inGame)
     string prevLines;
     string currentLine;
     string nextLines;
-    string inGameIDString = to_string(inGame.id);
+    string inGameIDString = to_string(inGame.id) + "$";
     ifstream gamesListRead;
     ofstream gamesListWrite;
 
@@ -77,5 +77,30 @@ void editGameInSave(Game inGame)
                    << inGame.completion << "$"
                    << inGame.priority << "\n"
                    << nextLines;
+    gamesListWrite.close();
+}
+
+void deleteGameInSave(int inID)
+{
+    string prevLines;
+    string currentLine;
+    string nextLines;
+    string idString = to_string(inID) + "$";
+    ifstream gamesListRead;
+    ofstream gamesListWrite;
+
+    gamesListRead.open("data/gameslist.txt");
+    getline(gamesListRead, currentLine, '\n');
+    while (currentLine.substr(0, idString.size()) != idString)
+    {
+        prevLines += currentLine + '\n';
+        getline(gamesListRead, currentLine, '\n');
+    }
+    while (getline(gamesListRead, currentLine, '\n'))
+        nextLines += currentLine + '\n';
+    gamesListRead.close();
+
+    gamesListWrite.open("data/gameslist.txt");
+    gamesListWrite << prevLines << nextLines;
     gamesListWrite.close();
 }
