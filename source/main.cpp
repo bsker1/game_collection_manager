@@ -14,6 +14,8 @@ void addGames();
 void selectGame(GameNode*&);
 void editGame(Game&);
 void deleteGame(GameNode*&, GameNode*&);
+void sortGames(GameNode*&);
+void filterGames(GameNode*);
 
 int main()
 {
@@ -62,12 +64,13 @@ void viewCollection()
         cout << "\nSelect an option:\n" << endl;
 
         cout << "\t1) Select Game\n"
-             << "\t2) Filter Games\n"
-             << "\t3) Back\n"
+             << "\t2) Sort Games\n"
+             << "\t3) Filter Games\n"
+             << "\t4) Back\n"
              << "\n*__ ";
         cin >> choice;
 
-        if (choice < 1 || choice > 3)
+        if (choice < 1 || choice > 4)
         {
             cerr << "ERROR: invalid choice" << endl;
             clearBuffer();
@@ -80,11 +83,16 @@ void viewCollection()
                 selectGame(head);
                 break;
             case 2:
+                sortGames(head);
                 break;
             case 3:
+                filterGames(head);
+                break;
+            case 4:
                 return;
         }
     }
+
     dallocList(head);
 }
 
@@ -206,6 +214,87 @@ void deleteGame(GameNode*& inHead, GameNode*& selectedGame)
 
     cout << "\nDelete Game successful." << endl;
     return;
+}
+
+void sortGames(GameNode*& inHead)
+{
+    if (inHead == nullptr)
+    {
+        cout << "\nNo games to sort!" << endl;
+        return;
+    }
+
+    while (true)
+    {
+        while (true)
+        {
+            int choice = 0;
+            cout << "\nHow would you like to sort?\n" << endl;
+
+            cout << "\t1) Recently Added\n"
+                 << "\t2) Name\n"
+                 << "\t3) Back\n"
+                 << "\n*__ ";
+            cin >> choice;
+
+            if (choice < 1 || choice > 3)
+            {
+                cerr << "ERROR: invalid choice" << endl;
+                clearBuffer();
+                continue;
+            }
+
+            switch (choice)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break; 
+                case 3:
+                    cout << "\nSort Games aborted." << endl;
+                    return;
+            }
+
+            break;
+        }
+
+        while (true)
+        {
+            int choice = 0;
+            cout << "\nAscending or descending order?\n" << endl;
+
+            cout << "\t1) Ascending\n"
+                 << "\t2) Descending\n"
+                 << "\t3) Back\n"
+                 << "\n*__ ";
+            cin >> choice;
+
+            if (choice < 1 || choice > 3)
+            {
+                cerr << "ERROR: invalid choice" << endl;
+                clearBuffer();
+                continue;
+            }
+
+            if (choice == 3)
+                break;
+
+            switch (choice)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+
+            return;
+        }
+    }
+}
+
+void filterGames(GameNode* inHead)
+{
+
 }
 
 void addGames()

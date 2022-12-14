@@ -5,7 +5,7 @@ int strToInt(string inString)
 {
     for (int i = 0; i < inString.size(); ++i)
     {
-        if (inString[i] < 48 || inString[i] > 57)
+        if (inString[i] < '0' || inString[i] > '9')
         {
             cerr << "ERROR: generateID() fail" << endl;
             return -1;
@@ -16,7 +16,7 @@ int strToInt(string inString)
     int placeBuffer = 1;
     for (int i = inString.size() - 1; i >= 0; --i)
     {
-        int digit = inString[i] - 48;
+        int digit = inString[i] - '0';
         id += digit * placeBuffer;
         placeBuffer *= 10;
     }
