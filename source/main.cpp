@@ -299,7 +299,54 @@ void sortGames(GameNode*& inHead)
 
 void filterGames(GameNode* inHead)
 {
+    while (true)
+    {
+        int choice = 0;
+        cout << "\nWhich filter would you like to apply?\n" << endl;
 
+        cout << "\t1) Clear Filters\n"
+             << "\t2) Specific Platform\n"
+             << "\t3) Owned Games\n"
+             << "\t4) Unplayed Games\n"
+             << "\t5) Games To Play\n"
+             << "\t6) Backlog Titles\n"
+             << "\t7) Back\n"
+             << "\n*__ ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 7)
+        {
+            cerr << "ERROR: invalid choice" << endl;
+            clearBuffer();
+            continue;
+        }
+
+        switch (choice)
+        {
+            case 1:
+                showAllGames(inHead);
+                break;
+            case 2:
+                filterPlatform(inHead);
+                break; 
+            case 3:
+                filterOwned(inHead);
+                break;
+            case 4:
+                filterNew(inHead);
+                break;
+            case 5:
+                filterPlay(inHead);
+                break;
+            case 6:
+                filterBacklog(inHead);
+                break;
+            case 7:
+                return;
+        }
+
+        break;
+    }
 }
 
 void addGames()

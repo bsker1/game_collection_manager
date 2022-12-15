@@ -180,12 +180,11 @@ GameNode* initializeList()
         }
     }
 
-    cout << "working" << endl;
     gamesListRead.close();
     return head;
 }
 
-//  Fills a Game object based on contents for a line in the save file
+//  Fills a Game object based on contents from a line in the save file
 void fillGame(Game& inGame, string gameData)
 {
     string currentData;
@@ -447,4 +446,102 @@ void reverseList(GameNode*& inHead)
     }
 
     inHead = newHead;
+}
+
+//  Sets all nodes' display member to true
+void showAllGames(GameNode* inHead)
+{
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        iter->display = true;
+        iter = iter->nextGame;
+    }
+}
+
+void filterPlatform(GameNode* inHead)
+{
+    string input;
+    bool loopFlag = true;
+    cin.get();
+    while (loopFlag)
+    {
+        cout << "\n\nEnter a platform, or type \"back\" to cancel:\n"
+             << "\n*__ ";
+        getline(cin, input);
+        if (input == "back")
+            return;
+        stringUpper(input);
+
+        ifstream platformsList;
+        string listIter;
+        platformsList.open("data/platformslist.txt");
+        while (getline(platformsList, listIter))
+        {
+            if (input == listIter)
+            {
+                loopFlag = false;
+                break;
+            }
+        }
+        platformsList.close();
+
+        if (loopFlag)
+        {
+            cerr << "\n\nERROR: invalid platform" << endl;
+            clearBuffer();
+        }
+    }
+
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        if (iter->game.platform != input)
+            iter->display = false;
+        iter = iter->nextGame;
+    }
+}
+
+void filterOwned(GameNode* inHead)
+{
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        if (iter->game.format != "PHYS" && iter->game.format != "DIG")
+            iter->display = false;
+        iter = iter->nextGame;
+    }
+}
+
+void filterNew(GameNode* inHead)
+{
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        if (iter->game.completion != "NEW")
+            iter->display = false;
+        iter = iter->nextGame;
+    }
+}
+
+void filterPlay(GameNode* inHead)
+{
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        if (iter->game.priority == "NONE")
+            iter->display = false;
+        iter = iter->nextGame;
+    }
+}
+
+void filterBacklog(GameNode* inHead)
+{
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        if (iter->game.priority != "BACKLOG")
+            iter->display = false;
+        iter = iter->nextGame;
+    }
 }

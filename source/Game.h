@@ -16,8 +16,9 @@ struct Game
 struct GameNode
 {
     Game game;
-    GameNode* nextGame;
     bool display = true;
+    //static int nodeCount;
+    GameNode* nextGame;
 };
 
 void dallocList(GameNode*&);
@@ -30,3 +31,9 @@ void copyGame(Game&, Game);
 void deleteNode(GameNode*&, GameNode*&);
 void sortList(GameNode*&, bool, bool);
 void reverseList(GameNode*&);
+void showAllGames(GameNode*);
+void filterPlatform(GameNode*);
+void filterOwned(GameNode*);
+void filterNew(GameNode*);
+void filterPlay(GameNode*);
+void filterBacklog(GameNode*);
