@@ -242,7 +242,8 @@ void fillGame(Game& inGame, string gameData)
 }
 
 //  Prints the contents of a Game linked list in table form
-void showGamesList(GameNode* inHead)
+//  marked for display, returns number of items displayed
+int showGamesList(GameNode* inHead)
 {
     int gameCount = 0;
     GameNode* iter = inHead;
@@ -293,6 +294,8 @@ void showGamesList(GameNode* inHead)
 
         iter = iter->nextGame;
     }
+
+    return gameCount;
 }
 
 //  Copies one Game object's members to another Game object
@@ -543,5 +546,48 @@ void filterBacklog(GameNode* inHead)
         if (iter->game.priority != "BACKLOG")
             iter->display = false;
         iter = iter->nextGame;
+    }
+}
+
+void randomizeGame(GameNode* inHead, int gameCount)
+{
+    srand(time(NULL));
+    while (true)
+    {
+        int game = rand() % gameCount;
+        GameNode* iter = inHead;
+        int index = 0;
+        while (!iter->display)
+            iter = iter->nextGame;
+        while (index != game)
+        {
+            if (iter->display)
+                ++index;
+            if (index == game)
+                break;
+            iter = iter->nextGame;
+        }
+        
+        cout << "\nYour game is " << iter->game.name << "!" << endl;
+        while (true)
+        {
+            char choice;
+            cout << endl;
+            cout << "\nRun again? (Y/N)\n"
+                 << "*__ ";
+            cin >> choice;
+
+            if (toupper(choice) != 'Y' && toupper(choice) != 'N')
+            {
+                cerr << "ERROR: invalid choice" << endl;
+                clearBuffer();
+                continue;
+            }
+
+            if (toupper(choice) == 'Y')
+                break;
+            
+            return;
+        }
     }
 }

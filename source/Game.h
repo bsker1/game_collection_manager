@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 #include "utils.h"
 
@@ -17,7 +18,6 @@ struct GameNode
 {
     Game game;
     bool display = true;
-    //static int nodeCount;
     GameNode* nextGame;
 };
 
@@ -26,7 +26,7 @@ Game enterGameAttributes(int);
 void showEnteredGame(Game);
 GameNode* initializeList();
 void fillGame(Game&, string);
-void showGamesList(GameNode*);
+int showGamesList(GameNode*);
 void copyGame(Game&, Game);
 void deleteNode(GameNode*&, GameNode*&);
 void sortList(GameNode*&, bool, bool);
@@ -37,3 +37,4 @@ void filterOwned(GameNode*);
 void filterNew(GameNode*);
 void filterPlay(GameNode*);
 void filterBacklog(GameNode*);
+void randomizeGame(GameNode*, int);

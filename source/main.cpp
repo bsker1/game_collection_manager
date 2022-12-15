@@ -55,10 +55,11 @@ int main()
 void viewCollection()
 {
     GameNode* head = initializeList();
+    int gameCount = 0;
     while (true)
     {
         displayTableMargin();
-        showGamesList(head);
+        gameCount = showGamesList(head);
 
         int choice = 0;
         cout << "\nSelect an option:\n" << endl;
@@ -66,11 +67,12 @@ void viewCollection()
         cout << "\t1) Select Game\n"
              << "\t2) Sort Games\n"
              << "\t3) Filter Games\n"
-             << "\t4) Back\n"
+             << "\t4) Random Game\n"
+             << "\t5) Back\n"
              << "\n*__ ";
         cin >> choice;
 
-        if (choice < 1 || choice > 4)
+        if (choice < 1 || choice > 5)
         {
             cerr << "ERROR: invalid choice" << endl;
             clearBuffer();
@@ -89,6 +91,9 @@ void viewCollection()
                 filterGames(head);
                 break;
             case 4:
+                randomizeGame(head, gameCount);
+                break;
+            case 5:
                 return;
         }
     }
