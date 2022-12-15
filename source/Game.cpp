@@ -356,7 +356,11 @@ void sortList(GameNode*& inHead, bool byName, bool descending)
             sourceIter = inHead;
             while (sourceIter != nullptr)
             {
-                if (sourceIter->game.name < nextNode->game.name)
+                string sourceNameLower = sourceIter->game.name;
+                stringLower(sourceNameLower);
+                string nextNameLower = nextNode->game.name;
+                stringLower(nextNameLower);
+                if (sourceNameLower < nextNameLower)
                     nextNode = sourceIter;
                 sourceIter = sourceIter->nextGame;
             }

@@ -31,6 +31,13 @@ void stringUpper(string& inString)
         inString[i] = toupper(inString[i]);
 }
 
+//  Converts each character in a string to lower case
+void stringLower(string& inString)
+{
+    for (int i = 0; i < inString.size(); ++i)
+        inString[i] = tolower(inString[i]);
+}
+
 //  Clears cin input buffer, for use whenever user inputs
 //  fail a determined test
 void clearBuffer()
