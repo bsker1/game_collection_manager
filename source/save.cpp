@@ -71,7 +71,7 @@ void editGameInSave(Game inGame)
     gamesListRead.close();
 
     gamesListWrite.open("data/gameslist.txt");
-    gamesListWrite << prevLines << inGameIDString << "$"
+    gamesListWrite << prevLines << inGameIDString
                    << inGame.name << "$" << inGame.platform
                    << "$" << inGame.format << "$"
                    << inGame.completion << "$"
