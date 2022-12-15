@@ -551,6 +551,11 @@ void filterBacklog(GameNode* inHead)
 
 void randomizeGame(GameNode* inHead, int gameCount)
 {
+    if (gameCount < 2)
+    {
+        cout << "\nNothing to randomize!" << endl;
+        return;
+    }
     srand(time(NULL));
     while (true)
     {

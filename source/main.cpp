@@ -223,7 +223,7 @@ void deleteGame(GameNode*& inHead, GameNode*& selectedGame)
 
 void sortGames(GameNode*& inHead)
 {
-    if (inHead == nullptr)
+    if (inHead == nullptr || inHead->nextGame == nullptr)
     {
         cout << "\nNo games to sort!" << endl;
         return;
@@ -304,6 +304,11 @@ void sortGames(GameNode*& inHead)
 
 void filterGames(GameNode* inHead)
 {
+    if (inHead == nullptr || inHead->nextGame == nullptr)
+    {
+        cout << "\nNothing to filter!" << endl;
+        return;
+    }
     while (true)
     {
         int choice = 0;
