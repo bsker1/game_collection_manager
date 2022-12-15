@@ -28,3 +28,5 @@ void fillGame(Game&, string);
 void showGamesList(GameNode*);
 void copyGame(Game&, Game);
 void deleteNode(GameNode*&, GameNode*&);
+void sortList(GameNode*&, bool, bool);
+void reverseList(GameNode*&);

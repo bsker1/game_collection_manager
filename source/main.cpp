@@ -226,6 +226,8 @@ void sortGames(GameNode*& inHead)
 
     while (true)
     {
+        bool byName = false;
+        bool descending = false;
         while (true)
         {
             int choice = 0;
@@ -249,6 +251,7 @@ void sortGames(GameNode*& inHead)
                 case 1:
                     break;
                 case 2:
+                    byName = true;
                     break; 
                 case 3:
                     cout << "\nSort Games aborted." << endl;
@@ -284,9 +287,11 @@ void sortGames(GameNode*& inHead)
                 case 1:
                     break;
                 case 2:
+                    descending = true;
                     break;
             }
 
+            sortList(inHead, byName, descending);
             return;
         }
     }

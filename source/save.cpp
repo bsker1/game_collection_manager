@@ -80,6 +80,7 @@ void editGameInSave(Game inGame)
     gamesListWrite.close();
 }
 
+//  Deletes corresponding game in save file to passed ID
 void deleteGameInSave(int inID)
 {
     string prevLines;

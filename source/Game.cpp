@@ -307,6 +307,7 @@ void copyGame(Game& copy, Game source)
     copy.priority = source.priority;
 }
 
+//  Deletes a selected node from a linked list
 void deleteNode(GameNode*& inHead, GameNode*& selectedGame)
 {
     if (inHead == nullptr)
@@ -336,4 +337,110 @@ void deleteNode(GameNode*& inHead, GameNode*& selectedGame)
     prev->nextGame = iter->nextGame;
     delete selectedGame;
     selectedGame = nullptr;
+}
+
+//  Sorts a linked list based on chosen parameters
+void sortList(GameNode*& inHead, bool byName, bool descending)
+{
+    if (inHead->nextGame == nullptr)
+        return;
+    
+    GameNode* newHead = nullptr;
+    GameNode* sourceIter = inHead;
+    GameNode* newIter = newHead;
+    if (byName)
+    {
+        while (inHead != nullptr)
+        {
+            GameNode* nextNode = inHead;
+            sourceIter = inHead;
+            while (sourceIter != nullptr)
+            {
+                if (sourceIter->game.name < nextNode->game.name)
+                    nextNode = sourceIter;
+                sourceIter = sourceIter->nextGame;
+            }
+
+            GameNode* newNode = new GameNode;
+            copyGame(newNode->game, nextNode->game);
+            newNode->display = nextNode->display;
+            newNode->nextGame = nullptr;
+            if (newHead == nullptr)
+            {
+                newHead = newNode;
+                newIter = newNode;
+            }
+            else
+            {
+                newIter->nextGame = newNode;
+                newIter = newIter->nextGame;
+            }
+
+            deleteNode(inHead, nextNode);
+        }
+    }
+    else
+    {
+        while (inHead != nullptr)
+        {
+            GameNode* nextNode = inHead;
+            sourceIter = inHead;
+            while (sourceIter != nullptr)
+            {
+                if (sourceIter->game.id < nextNode->game.id)
+                    nextNode = sourceIter;
+                sourceIter = sourceIter->nextGame;
+            }
+
+            GameNode* newNode = new GameNode;
+            copyGame(newNode->game, nextNode->game);
+            newNode->display = nextNode->display;
+            newNode->nextGame = nullptr;
+            if (newHead == nullptr)
+            {
+                newHead = newNode;
+                newIter = newNode;
+            }
+            else
+            {
+                newIter->nextGame = newNode;
+                newIter = newIter->nextGame;
+            }
+
+            deleteNode(inHead, nextNode);
+        }
+    }
+
+    if (descending)
+        reverseList(newHead);
+    
+    inHead = newHead;
+}
+
+//  Reverses the elements of a linked list
+void reverseList(GameNode*& inHead)
+{
+    if (inHead->nextGame == nullptr)
+        return;
+    
+    GameNode* newHead = inHead;
+    GameNode* newPrev = newHead;
+    while (newHead->nextGame != nullptr)
+    {
+        newPrev = newHead;
+        newHead = newHead->nextGame;
+    }
+
+    GameNode* newTail = newHead;
+    while (inHead != newTail)
+    {
+        newPrev = inHead;
+        while (newPrev->nextGame != newTail)
+            newPrev = newPrev->nextGame;
+        newTail->nextGame = newPrev;
+        newPrev->nextGame = nullptr;
+        newTail = newPrev;
+    }
+
+    inHead = newHead;
 }
