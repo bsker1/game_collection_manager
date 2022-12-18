@@ -560,17 +560,17 @@ void randomizeGame(GameNode* inHead, int gameCount)
     while (true)
     {
         int game = rand() % gameCount;
+        cout << "Rand num is " << game << endl;
         GameNode* iter = inHead;
-        int index = 0;
         while (!iter->display)
             iter = iter->nextGame;
+        int index = 0;
         while (index != game)
         {
-            if (iter->display)
-                ++index;
-            if (index == game)
-                break;
             iter = iter->nextGame;
+            while (!iter->display)
+                iter = iter->nextGame;
+            ++index;
         }
         
         cout << "\nYour game is " << iter->game.name << "!" << endl;
