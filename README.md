@@ -1,4 +1,4 @@
 # game_collection_manager
 
-I am designing a console app that I can use to track video games in my collection </br>
-and easily browse titles based on filter terms and sort options.
+Game Collection Manaher (GCM) is a console app that I use to track video games</br>
+in my collection and easily browse titles based on filter terms and sort options.
