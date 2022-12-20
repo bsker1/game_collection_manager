@@ -34,6 +34,7 @@ void reverseList(GameNode*&);
 void showAllGames(GameNode*);
 void filterPlatform(GameNode*);
 void filterOwned(GameNode*);
+void filterNonPhysical(GameNode*);
 void filterNew(GameNode*);
 void filterPlay(GameNode*);
 void filterBacklog(GameNode*);

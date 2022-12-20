@@ -317,14 +317,15 @@ void filterGames(GameNode* inHead)
         cout << "\t1) Clear Filters\n"
              << "\t2) Specific Platform\n"
              << "\t3) Owned Games\n"
-             << "\t4) Unplayed Games\n"
-             << "\t5) Games To Play\n"
-             << "\t6) Backlog Titles\n"
-             << "\t7) Back\n"
+             << "\t4) Non-Physical Games\n"
+             << "\t5) Unplayed Games\n"
+             << "\t6) Games To Play\n"
+             << "\t7) Backlog Titles\n"
+             << "\t8) Back\n"
              << "\n*__ ";
         cin >> choice;
 
-        if (choice < 1 || choice > 7)
+        if (choice < 1 || choice > 8)
         {
             cerr << "ERROR: invalid choice" << endl;
             clearBuffer();
@@ -343,15 +344,18 @@ void filterGames(GameNode* inHead)
                 filterOwned(inHead);
                 break;
             case 4:
-                filterNew(inHead);
+                filterNonPhysical(inHead);
                 break;
             case 5:
-                filterPlay(inHead);
+                filterNew(inHead);
                 break;
             case 6:
-                filterBacklog(inHead);
+                filterPlay(inHead);
                 break;
             case 7:
+                filterBacklog(inHead);
+                break;
+            case 8:
                 return;
         }
 

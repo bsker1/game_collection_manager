@@ -516,6 +516,17 @@ void filterOwned(GameNode* inHead)
     }
 }
 
+void filterNonPhysical(GameNode* inHead)
+{
+    GameNode* iter = inHead;
+    while (iter != nullptr)
+    {
+        if (iter->game.format == "PHYS")
+            iter->display = false;
+        iter = iter->nextGame;
+    }
+}
+
 void filterNew(GameNode* inHead)
 {
     GameNode* iter = inHead;
