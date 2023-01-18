@@ -1,3 +1,13 @@
+542$Bravely Default$3DS$EMU$NEW$PLAY
+541$Kid Icarus: Uprising$3DS$EMU$NEW$PLAY
+540$Super Street Fighter IV 3D Edition$3DS$EMU$NEW$PLAY
+539$Star Fox 64 3D$3DS$EMU$NEW$PLAY
+538$Shin Megami Tensei IV$3DS$EMU$NEW$PLAY
+537$Fire Emblem Awakening$3DS$EMU$NEW$PLAY
+536$Kirby: Planet Robobot$3DS$EMU$NEW$PLAY
+535$Dragon Quest VIII: Journey Of The Cursed King$3DS$EMU$NEW$PLAY
+534$Animal Crossing: New Leaf$3DS$EMU$STARTED$PLAY
+533$Luigi's Mansion$3DS$EMU$NEW$PLAY
 532$Grand Theft Auto: Vice City$XBOX$PHYS$STARTED$BACKLOG
 531$Rare Replay$XBONE$PHYS$STARTED$PLAY
 530$The Witcher 3: Wild Hunt$PC$DIG$STARTED$PLAY
@@ -8,7 +18,7 @@
 525$Super Mario Sunshine$SWITCH$PHYS$STARTED$PLAY
 524$Super Mario 64$SWITCH$PHYS$STARTED$PLAY
 523$Hellblade: Senura's Sacrifice$XBONE$DIG$NEW$PLAY
-522$Star Wars Jedi: Fallen Order$XBONE$DIG$NEW$PLAY
+522$Star Wars Jedi: Fallen Order$XBONE$DIG$STARTED$PLAY
 521$Final Fantasy X/X-2 HD Remaster$PS3$PHYS$STARTED$BACKLOG
 520$MechAssault$XBOX$PHYS$STARTED$PLAY
 519$Max Payne$XBOX$PHYS$STARTED$PLAY
