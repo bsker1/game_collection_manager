@@ -1,3 +1,20 @@
+564$Tatsunoko vs. Capcom: Ultimate All-Stars$WII$EMU$NEW$PLAY
+563$Super Mario Galaxy 2$WII$EMU$STARTED$NONE
+562$Boom Blox$WII$EMU$NEW$PLAY
+561$Wii Music$WII$EMU$STARTED$PLAY
+560$Rock Band 3$WII$EMU$NEW$PLAY
+559$Rhythm Heaven Fever$WII$EMU$NEW$PLAY
+558$Rayman Raving Rabbids 2$WII$EMU$STARTED$PLAY
+557$Pokepark 2: Wonders Beyond$WII$EMU$STARTED$NONE
+556$Pokemon Battle Revolution$WII$EMU$NEW$PLAY
+555$Wii Play$WII$EMU$STARTED$PLAY
+554$Metroid Prime Trilogy$WII$EMU$NEW$PLAY
+553$Metroid: Other M$WII$EMU$NEW$PLAY
+552$Kirby's Dream Collection Special Edition$WII$EMU$NEW$PLAY
+551$Guitar Hero 5$WII$EMU$STARTED$PLAY
+550$Guitar Hero World Tour$WII$EMU$STARTED$PLAY
+549$Guitar Hero: Warriors Of Rock$WII$EMU$BEAT$PLAY
+548$Guitar Hero: Aerosmith$WII$EMU$BEAT$PLAY
 547$Jade Empire$XBOX$DIG$NEW$PLAY
 546$Ori And The Blind Forest$XBONE$DIG$STARTED$BACKLOG
 545$Hydro Thunder Hurricane$360$DIG$NEW$PLAY
@@ -48,7 +65,6 @@
 485$No More Heroes 2: Desperate Struggle$WII$EMU$NEW$PLAY
 484$New Super Mario Bros. Wii$WII$EMU$BEAT$PLAY
 483$MySims$WII$EMU$STARTED$PLAY
-482$Metroid Prime: Trilogy$WII$EMU$NEW$PLAY
 481$Mario Power Tennis$WII$EMU$NEW$PLAY
 480$Mario Kart Wii$WII$EMU$STARTED$PLAY
 479$Mario Super Sluggers$WII$EMU$STARTED$PLAY
