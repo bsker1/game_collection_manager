@@ -16,9 +16,9 @@
 549$Guitar Hero: Warriors Of Rock$WII$EMU$BEAT$PLAY
 548$Guitar Hero: Aerosmith$WII$EMU$BEAT$PLAY
 547$Jade Empire$XBOX$DIG$NEW$PLAY
-546$Ori And The Blind Forest$XBONE$DIG$STARTED$BACKLOG
+546$Ori And The Blind Forest$XBONE$DIG$STARTED$PLAY
 545$Hydro Thunder Hurricane$360$DIG$NEW$PLAY
-544$Psychonauts$XBOX$DIG$NEW$BACKLOG
+544$Psychonauts$XBONE$DIG$STARTED$PLAY
 543$Metal Gear Solid V: The Phantom Pain$XBONE$DIG$NEW$PLAY
 542$Bravely Default$3DS$EMU$NEW$PLAY
 541$Kid Icarus: Uprising$3DS$EMU$NEW$PLAY
@@ -34,7 +34,7 @@
 531$Rare Replay$XBONE$PHYS$STARTED$PLAY
 530$The Witcher 3: Wild Hunt$PC$DIG$NEW$BACKLOG
 529$Horizon Zero Dawn$PC$DIG$STARTED$BACKLOG
-528$Shadow Of The Colossus$PS3$PHYS$NEW$PLAY
+528$Shadow Of The Colossus$PS3$PHYS$NEW$BACKLOG
 527$Ico$PS3$PHYS$STARTED$NONE
 526$Super Mario Galaxy$SWITCH$PHYS$STARTED$BACKLOG
 525$Super Mario Sunshine$SWITCH$PHYS$STARTED$PLAY
@@ -251,7 +251,7 @@
 298$Fallout: New Vegas$PS3$PHYS$STARTED$NONE
 297$Fallout 3$PS3$PHYS$NEW$PLAY
 296$Dead Island: Riptide$PS3$PHYS$NEW$NONE
-295$Dead Island$PS3$PHYS$NEW$PLAY
+295$Dead Island$PS3$PHYS$STARTED$NONE
 294$Call Of Duty: Black Ops$PS3$PHYS$STARTED$BACKLOG
 293$Resistance: Fall Of Man$PS3$PHYS$STARTED$NONE
 292$Ni No Kuni: Wrath Of The White Witch$PS3$PHYS$STARTED$PLAY
