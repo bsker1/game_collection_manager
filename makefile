@@ -1,5 +1,6 @@
 gcm: main.o Game.o save.o utils.o
 	g++ -std=c++17 main.o Game.o save.o utils.o -o gcm
+	rm *.o
 
 main.o:
 	g++ -c -std=c++17 source/main.cpp
@@ -16,7 +17,3 @@ utils.o:
 run:
 	clear
 	./gcm
-
-clean:
-	rm *.o gcm
-	clear
